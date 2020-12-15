@@ -1,10 +1,31 @@
 // Defining text characters for the empty and full hearts for you to use later.
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
-
 // Your JavaScript code goes here!
 
+function displayErrorMessage(message) {
+  document.getElementById('modal').class = '';
+  document.getElementById('modal-message').innerText = message;
+  setTimeout(function() {
+    document.getElementById('modal').class = 'hidden';
+  }, 5000);
+}
 
+function addListenersToLikeButtons(likeButtons) {
+  for (const likeButton of likeButtons) {
+    likeButton.addEventListener('click', function() {
+      mimicServerCall().then(function(response) {
+        console.log(response);
+      }).catch(function(error) {
+        displayErrorMessage(error);
+      });
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  addListenersToLikeButtons(document.getElementsByClassName('like'))
+});
 
 
 //------------------------------------------------------------------------------
